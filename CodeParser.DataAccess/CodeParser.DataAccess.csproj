@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeParser.DataAccess\CodeParser.DataAccess.csproj" />
-    <ProjectReference Include="..\CodeParser.Logic.Interfaces\CodeParser.Logic.Interfaces.csproj" />
+    <ProjectReference Include="..\CodeParser.DataAccess.Interfaces\CodeParser.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\CodeParser.Database\CodeParser.Database.csproj" />
   </ItemGroup>
 
 </Project>

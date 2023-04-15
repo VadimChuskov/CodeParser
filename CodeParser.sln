@@ -3,17 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParser", "CodeParser\CodeParser.csproj", "{97DF4878-AF3D-4306-ADF0-BDFB5EC74424}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser", "CodeParser\CodeParser.csproj", "{97DF4878-AF3D-4306-ADF0-BDFB5EC74424}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParser.Logic", "CodeParser.Logic\CodeParser.Logic.csproj", "{2CF953CE-BB0A-499A-ACA7-842AE8CF5C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser.Logic", "CodeParser.Logic\CodeParser.Logic.csproj", "{2CF953CE-BB0A-499A-ACA7-842AE8CF5C84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FF8B790C-400A-4430-862C-4A5EFD17BCBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParser.Logic.Interfaces", "CodeParser.Logic.Interfaces\CodeParser.Logic.Interfaces.csproj", "{E125B842-8DA2-4378-A3E6-C1899393C0DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser.Logic.Interfaces", "CodeParser.Logic.Interfaces\CodeParser.Logic.Interfaces.csproj", "{E125B842-8DA2-4378-A3E6-C1899393C0DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{1A6B620B-FEF1-4E33-BF27-126D658534E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParser.Domain", "CodeParser.Domain\CodeParser.Domain.csproj", "{51DC3F42-C222-405F-AEB1-6E8E80985714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser.Domain", "CodeParser.Domain\CodeParser.Domain.csproj", "{51DC3F42-C222-405F-AEB1-6E8E80985714}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{82435D7D-A986-452D-B1BE-79BDA141A132}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser.Database", "CodeParser.Database\CodeParser.Database.csproj", "{D7A4B580-D9A3-43B0-9187-68A23E17D3C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB500F45-59F5-44D1-B5B9-ABD17B1700C8}"
+	ProjectSection(SolutionItems) = preProject
+		README.dm = README.dm
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParser.DataAccess", "CodeParser.DataAccess\CodeParser.DataAccess.csproj", "{6F0F707F-6F80-4E7E-A96C-B5A312302AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParser.DataAccess.Interfaces", "CodeParser.DataAccess.Interfaces\CodeParser.DataAccess.Interfaces.csproj", "{A10F6388-E5F3-4EA0-ABB2-37171C59B7C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +50,18 @@ Global
 		{51DC3F42-C222-405F-AEB1-6E8E80985714}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51DC3F42-C222-405F-AEB1-6E8E80985714}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51DC3F42-C222-405F-AEB1-6E8E80985714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A4B580-D9A3-43B0-9187-68A23E17D3C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A4B580-D9A3-43B0-9187-68A23E17D3C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A4B580-D9A3-43B0-9187-68A23E17D3C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A4B580-D9A3-43B0-9187-68A23E17D3C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F0F707F-6F80-4E7E-A96C-B5A312302AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F0F707F-6F80-4E7E-A96C-B5A312302AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F0F707F-6F80-4E7E-A96C-B5A312302AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F0F707F-6F80-4E7E-A96C-B5A312302AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A10F6388-E5F3-4EA0-ABB2-37171C59B7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10F6388-E5F3-4EA0-ABB2-37171C59B7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10F6388-E5F3-4EA0-ABB2-37171C59B7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10F6388-E5F3-4EA0-ABB2-37171C59B7C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +71,9 @@ Global
 		{2CF953CE-BB0A-499A-ACA7-842AE8CF5C84} = {FF8B790C-400A-4430-862C-4A5EFD17BCBD}
 		{E125B842-8DA2-4378-A3E6-C1899393C0DD} = {FF8B790C-400A-4430-862C-4A5EFD17BCBD}
 		{51DC3F42-C222-405F-AEB1-6E8E80985714} = {FF8B790C-400A-4430-862C-4A5EFD17BCBD}
+		{D7A4B580-D9A3-43B0-9187-68A23E17D3C2} = {82435D7D-A986-452D-B1BE-79BDA141A132}
+		{6F0F707F-6F80-4E7E-A96C-B5A312302AEE} = {82435D7D-A986-452D-B1BE-79BDA141A132}
+		{A10F6388-E5F3-4EA0-ABB2-37171C59B7C0} = {82435D7D-A986-452D-B1BE-79BDA141A132}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2768A7E-697F-4D87-8394-3ED72CC37077}
