@@ -12,4 +12,5 @@ public class Class : Object
     public ClassType ClassType { get; set; }
 
     public IList<Method> Methods { get; } = new List<Method>();
+    public IList<Field> Fields { get; } = new List<Field>();
 }

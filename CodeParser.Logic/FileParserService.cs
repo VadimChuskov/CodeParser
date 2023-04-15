@@ -17,6 +17,8 @@ public class FileParserService : IFileParserService
     private const string MethodSignaturePattern = @"(?<accessModifier>(public|private|protected|internal))\s*(?<isAsync>(async)?)\s*(?<returnedType>\S*)\s*(?<name>\S*)\((?<params>((\s*\w*\??,?)*))\)";
     private const string MethodParameterPattern = @"(?<type>(\w)*) (?<name>(\w)*)";
 
+    private const string FieldSignaturePattern = @"(?<accessModifier>(public|private|protected|internal))\s*(?<type>[a-zA-Z<>]*)(?<nullable>(\?)?)\s*(?<name>\S*)";
+
     public async Task<IEnumerable<Object>> ParseAsync(string path)
     {
         var result = new List<Object>();
@@ -24,6 +26,9 @@ public class FileParserService : IFileParserService
         {
             return result;
         }
+
+        //var fr = new FileRepository();
+        //fr.TestConnection();
 
         var text = await File.ReadAllTextAsync(path);
 
@@ -62,7 +67,7 @@ public class FileParserService : IFileParserService
             return matches.Select(it => it.Groups["namespace"].Value).ToList();
         }
 
-        throw new ArgumentException("using??");
+        return new List<string>();
     }
 
     private List<string> GetSpecificUsings(string fileContent)
@@ -119,6 +124,21 @@ public class FileParserService : IFileParserService
 
                 method.Result = new Object(match.Groups["returnedType"].Value, null, null);
                 classToParsing.Methods.Add(method);
+            }
+        }
+        
+        matches = Matches(text, FieldSignaturePattern, RegexOptions.None);
+        if (matches.Any())
+        {
+            foreach (Match match in matches)
+            {
+                var field = new Field(match.Groups["name"].Value, classToParsing.Namespace, classToParsing.Path, classToParsing)
+                    {
+                        Type = match.Groups["type"].Value,
+                        Nullable = !string.IsNullOrEmpty(match.Groups["nullable"].Value)
+                    };
+
+                classToParsing.Fields.Add(field);
             }
         }
     }
