@@ -21,12 +21,17 @@ namespace CodeParser.Database.Migrations
                     Path = table.Column<string>(type: "TEXT", nullable: false),
                     Hash = table.Column<string>(type: "TEXT", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    LastUpdate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_Name",
+                table: "Files",
+                column: "Name");
         }
 
         /// <inheritdoc />

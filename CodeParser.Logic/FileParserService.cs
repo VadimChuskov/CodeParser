@@ -1,10 +1,16 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
+using CodeParser.Common;
+using CodeParser.DataAccess;
+using CodeParser.DataAccess.Interfaces;
 using CodeParser.Domain;
 using CodeParser.Domain.Enums;
 using CodeParser.Logic.Interfaces;
 using static System.Text.RegularExpressions.Regex;
 using Object = CodeParser.Domain.Object;
 using Enum = CodeParser.Domain.Enum;
+using File = CodeParser.Domain.File;
+using IoFile = System.IO.File;
 
 namespace CodeParser.Logic;
 
@@ -19,42 +25,79 @@ public class FileParserService : IFileParserService
 
     private const string FieldSignaturePattern = @"(?<accessModifier>(public|private|protected|internal))\s*(?<type>[a-zA-Z<>]*)(?<nullable>(\?)?)\s*(?<name>\S*)";
 
+    private readonly IFileRepository _fileRepository;
+    
+    private object readLocker = new();
+    private object addLocker = new();
+    
+    public FileParserService()
+    {
+        _fileRepository = new FileRepository();
+    }
+    
     public async Task<IEnumerable<Object>> ParseAsync(string path)
     {
-        var result = new List<Object>();
-        if (!File.Exists(path))
+        if (!Path.Exists(path))
         {
-            return result;
+            throw new FileNotFoundException(path);
         }
 
-        //var fr = new FileRepository();
-        //fr.TestConnection();
+        var hash = ShaManipulator.GetCheckSum(path);
 
-        var text = await File.ReadAllTextAsync(path);
+        var fileName = Path.GetFileName(path);
 
-        var commonUsings = GetCommonUsings(text);
+        var files = new List<Database.Models.File>().AsReadOnly();
+        
+        lock (readLocker)
+        {
+            files = (ReadOnlyCollection<Database.Models.File>)_fileRepository.Find(fileName);
+        }
+
+        var file = files.FirstOrDefault(f => f.Path.Equals(path));
+
+        if (file != null && file.Hash.Equals(hash))
+        {
+            //
+            return new List<Object>();
+        }
+        
+        var result = new List<Object>();
+
+        var text = await IoFile.ReadAllTextAsync(path);
+
+        //var commonUsings = GetCommonUsings(text);
         //var specificUsings = GetSpecificUsings(text);
 
         var fileNamespace = GetNamespace(text);
 
-        var matches = Matches(text, ObjectNameTypePattern, RegexOptions.None);
+        var newFile = new File(fileName, fileNamespace, path, hash);
 
-        foreach (Match match in matches)
+        //await _fileRepository.AddAsync(newFile);
+        
+        lock (readLocker)
         {
-            var name = match.Groups["name"].Value;
-
-            switch (match.Groups["type"].Value)
-            {
-                case "class":
-                    var classToParsing = new Class(name, fileNamespace, path);
-                    ParseClass(classToParsing, text);
-                    result.Add(classToParsing);
-                    break;
-                case "enum":
-                    result.Add(new Enum(name, fileNamespace, path));
-                    break;
-            }
+            _fileRepository.Add(newFile);
         }
+       
+        //
+        // var matches = Matches(text, ObjectNameTypePattern, RegexOptions.None);
+        //
+        // foreach (Match match in matches)
+        // {
+        //     var name = match.Groups["name"].Value;
+        //
+        //     switch (match.Groups["type"].Value)
+        //     {
+        //         case "class":
+        //             var classToParsing = new Class(name, fileNamespace, path);
+        //             ParseClass(classToParsing, text);
+        //             result.Add(classToParsing);
+        //             break;
+        //         case "enum":
+        //             result.Add(new Enum(name, fileNamespace, path));
+        //             break;
+        //     }
+        // }
 
         return result;
     }

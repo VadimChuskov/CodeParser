@@ -9,10 +9,10 @@ public class Object
         Namespace = fileNamespace;
     }
 
-    public string Name { get; set; }
-    public string Path { get; set; }
+    public string Name { get; }
+    public string Path { get; }
 
-    public string Namespace { get; set; }
+    public string Namespace { get; }
 
     public IEnumerable<string> Usings { get; } = new List<string>();
 }

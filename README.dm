@@ -9,4 +9,6 @@ Add-Migration InitialCreate
 Add-Migration InitialCreate
 >Could not load assembly 'CodeParser.Database'. Ensure it is referenced by the startup project 'CodeParser'.
 
+Remove-Migration
+
 Update-Database

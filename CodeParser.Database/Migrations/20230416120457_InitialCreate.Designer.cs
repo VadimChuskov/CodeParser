@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeParser.Database.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230415214142_InitialCreate")]
+    [Migration("20230416120457_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace CodeParser.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastUpdate")
+                    b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -45,6 +45,8 @@ namespace CodeParser.Database.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Files");
                 });
