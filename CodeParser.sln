@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser.Database", "Code
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB500F45-59F5-44D1-B5B9-ABD17B1700C8}"
 	ProjectSection(SolutionItems) = preProject
-		README.dm = README.dm
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeParser.DataAccess", "CodeParser.DataAccess\CodeParser.DataAccess.csproj", "{6F0F707F-6F80-4E7E-A96C-B5A312302AEE}"

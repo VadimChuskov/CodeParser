@@ -2,8 +2,7 @@
 
 public class Enum : Object
 {
-    public Enum(string name, string fileNamespace, string path)
-        : base(name, fileNamespace, path)
+    public Enum(string name, File file) : base(name, file)
     {
     }
 }

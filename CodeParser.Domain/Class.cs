@@ -4,8 +4,7 @@ namespace CodeParser.Domain;
 
 public class Class : Object
 {
-    public Class(string name, string fileNamespace, string path)
-        : base(name, fileNamespace, path)
+    public Class(string name, File file) : base(name, file)
     {
     }
 

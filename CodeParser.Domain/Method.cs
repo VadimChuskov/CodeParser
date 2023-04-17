@@ -2,8 +2,8 @@
 
 public class Method : Object
 {
-    public Method(string name, string fileNamespace, string path, Object parent) 
-        : base(name, fileNamespace, path)
+    public Method(string name, File file, Object parent) 
+        : base(name, file)
     {
         Parent = parent;
     }
@@ -19,4 +19,6 @@ public class Method : Object
                                  && Parent != null 
                                  && !string.IsNullOrEmpty(Parent.Name) 
                                  && Parent.Name == Result.Name;
+
+
 }

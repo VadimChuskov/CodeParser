@@ -46,7 +46,7 @@ public class FileParserService : IFileParserService
 
         var fileName = Path.GetFileName(path);
 
-        var files = new List<Database.Models.File>().AsReadOnly();
+        ReadOnlyCollection<Database.Models.File> files;
         
         lock (readLocker)
         {
@@ -70,7 +70,7 @@ public class FileParserService : IFileParserService
 
         var fileNamespace = GetNamespace(text);
 
-        var newFile = new File(fileName, fileNamespace, path, hash);
+        var newFile = new File(fileName, path, hash, fileNamespace);
 
         //await _fileRepository.AddAsync(newFile);
         
@@ -135,54 +135,54 @@ public class FileParserService : IFileParserService
         throw new ArgumentException("namespace??");
     }
 
-    private void ParseClass(Class classToParsing, string text)
-    {
-        var name = classToParsing.Name;
-
-        if (name.EndsWith("Service"))
-        {
-            classToParsing.ClassType = ClassType.Service;
-        }
-        else if (name.EndsWith("Dto") || name.EndsWith("Model"))
-        {
-            classToParsing.ClassType = ClassType.Model;
-        }
-
-        var matches = Matches(text, MethodSignaturePattern, RegexOptions.None);
-        if (matches.Any())
-        {
-            foreach (Match match in matches)
-            {
-                var method = new Method(match.Groups["name"].Value, classToParsing.Namespace, classToParsing.Path, classToParsing);
-                var paramsString = match.Groups["params"].Value;
-                if (!string.IsNullOrEmpty(paramsString) && !paramsString.Equals("void"))
-                {
-                    var paramStringList = paramsString.Split(',');
-                    //var order = 0;
-                    foreach (var param in paramStringList)
-                    {
-                        method.Parameters.Add(param.Trim());
-                    }
-                }
-
-                method.Result = new Object(match.Groups["returnedType"].Value, null, null);
-                classToParsing.Methods.Add(method);
-            }
-        }
-        
-        matches = Matches(text, FieldSignaturePattern, RegexOptions.None);
-        if (matches.Any())
-        {
-            foreach (Match match in matches)
-            {
-                var field = new Field(match.Groups["name"].Value, classToParsing.Namespace, classToParsing.Path, classToParsing)
-                    {
-                        Type = match.Groups["type"].Value,
-                        Nullable = !string.IsNullOrEmpty(match.Groups["nullable"].Value)
-                    };
-
-                classToParsing.Fields.Add(field);
-            }
-        }
-    }
+    // private void ParseClass(Class classToParsing, string text)
+    // {
+    //     var name = classToParsing.Name;
+    //
+    //     if (name.EndsWith("Service"))
+    //     {
+    //         classToParsing.ClassType = ClassType.Service;
+    //     }
+    //     else if (name.EndsWith("Dto") || name.EndsWith("Model"))
+    //     {
+    //         classToParsing.ClassType = ClassType.Model;
+    //     }
+    //
+    //     var matches = Matches(text, MethodSignaturePattern, RegexOptions.None);
+    //     if (matches.Any())
+    //     {
+    //         foreach (Match match in matches)
+    //         {
+    //             var method = new Method(match.Groups["name"].Value, classToParsing.Namespace, classToParsing.Path, classToParsing);
+    //             var paramsString = match.Groups["params"].Value;
+    //             if (!string.IsNullOrEmpty(paramsString) && !paramsString.Equals("void"))
+    //             {
+    //                 var paramStringList = paramsString.Split(',');
+    //                 //var order = 0;
+    //                 foreach (var param in paramStringList)
+    //                 {
+    //                     method.Parameters.Add(param.Trim());
+    //                 }
+    //             }
+    //
+    //             method.Result = new Object(match.Groups["returnedType"].Value, null, null);
+    //             classToParsing.Methods.Add(method);
+    //         }
+    //     }
+    //     
+    //     matches = Matches(text, FieldSignaturePattern, RegexOptions.None);
+    //     if (matches.Any())
+    //     {
+    //         foreach (Match match in matches)
+    //         {
+    //             var field = new Field(match.Groups["name"].Value, classToParsing.Namespace, classToParsing.Path, classToParsing)
+    //                 {
+    //                     Type = match.Groups["type"].Value,
+    //                     Nullable = !string.IsNullOrEmpty(match.Groups["nullable"].Value)
+    //                 };
+    //
+    //             classToParsing.Fields.Add(field);
+    //         }
+    //     }
+    // }
 }

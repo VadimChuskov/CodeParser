@@ -25,8 +25,8 @@ public class FolderParserService : IFolderParserService
                 && !fp.Contains("Tests"))
             .ToList();
 
-        var availableProcessorCount = Environment.ProcessorCount - 3;
-        //var availableProcessorCount = 4;
+        //var availableProcessorCount = Environment.ProcessorCount - 3;
+        var availableProcessorCount = 1;
 
         var filesPerProcessor = (files.Count / availableProcessorCount) + 1;
         

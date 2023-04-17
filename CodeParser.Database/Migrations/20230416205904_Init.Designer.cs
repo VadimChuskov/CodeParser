@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeParser.Database.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230416120457_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230416205904_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace CodeParser.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("NamespaceId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -48,7 +51,38 @@ namespace CodeParser.Database.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Files");
+                    b.HasIndex("NamespaceId");
+
+                    b.ToTable("File");
+                });
+
+            modelBuilder.Entity("CodeParser.Database.Models.Namespace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Namespace");
+                });
+
+            modelBuilder.Entity("CodeParser.Database.Models.File", b =>
+                {
+                    b.HasOne("CodeParser.Database.Models.Namespace", "Namespace")
+                        .WithMany()
+                        .HasForeignKey("NamespaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Namespace");
                 });
 #pragma warning restore 612, 618
         }

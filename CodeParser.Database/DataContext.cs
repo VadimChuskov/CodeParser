@@ -19,5 +19,6 @@ public class DataContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 
-    public DbSet<Models.File> Files { get; set; }
+    public DbSet<Models.File> File { get; set; }
+    public DbSet<Models.Namespace> Namespace { get; set; }
 }
