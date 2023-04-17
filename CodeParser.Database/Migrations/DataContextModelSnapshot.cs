@@ -17,6 +17,37 @@ namespace CodeParser.Database.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
+            modelBuilder.Entity("CodeParser.Database.Models.Enums.ClassType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClassType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "None"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Service"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Model"
+                        });
+                });
+
             modelBuilder.Entity("CodeParser.Database.Models.File", b =>
                 {
                     b.Property<int>("Id")

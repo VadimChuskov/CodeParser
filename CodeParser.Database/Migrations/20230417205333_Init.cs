@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CodeParser.Database.Migrations
 {
     /// <inheritdoc />
@@ -11,6 +13,18 @@ namespace CodeParser.Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ClassType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassType", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Namespace",
                 columns: table => new
@@ -48,6 +62,16 @@ namespace CodeParser.Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "ClassType",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 0, "None" },
+                    { 1, "Service" },
+                    { 2, "Model" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_File_Name",
                 table: "File",
@@ -68,6 +92,9 @@ namespace CodeParser.Database.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ClassType");
+
             migrationBuilder.DropTable(
                 name: "File");
 
