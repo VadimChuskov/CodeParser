@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeParser.DataAccess.Interfaces\CodeParser.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\CodeParser.Database\CodeParser.Database.csproj" />
+  </ItemGroup>
+
+</Project>

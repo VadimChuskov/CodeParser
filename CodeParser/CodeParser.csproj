@@ -9,6 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeParser.Logic.Interfaces\CodeParser.Logic.Interfaces.csproj" />
     <ProjectReference Include="..\CodeParser.Logic\CodeParser.Logic.csproj" />
   </ItemGroup>
+
 </Project>

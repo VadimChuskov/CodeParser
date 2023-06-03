@@ -1,18 +1,13 @@
 ﻿namespace CodeParser.Domain;
 
-public class Object
+public class Object : DomainEntity
 {
-    public Object(string name, string fileNamespace, string path)
+    public Object(string name, File file)
     {
         Name = name;
-        Path = path;
-        Namespace = fileNamespace;
+        File = file;
     }
 
-    public string Name { get; set; }
-    public string Path { get; set; }
-
-    public string Namespace { get; set; }
-
+    public File File { get; }
     public IEnumerable<string> Usings { get; } = new List<string>();
 }

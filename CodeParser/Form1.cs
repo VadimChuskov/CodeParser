@@ -8,11 +8,13 @@ namespace CodeParser
     public partial class Form1 : Form
     {
         private readonly IFileParserService _fileParserService;
+        private readonly IFolderParserService _folderParserService;
 
         public Form1()
         {
             InitializeComponent();
             _fileParserService = new FileParserService();
+            _folderParserService = new FolderParserService();
         }
 
         private async void btn_ParseFile_Click(object sender, EventArgs e)
@@ -70,6 +72,11 @@ namespace CodeParser
             initValue.Append("};\r\n");
             var resultA = initValue.ToString();
             ;
+        }
+
+        private void btn_folder_Click(object sender, EventArgs e)
+        {
+            _folderParserService.ParseAsync("c:\\Work\\StyleRow\\stylerow\\");
         }
     }
 }

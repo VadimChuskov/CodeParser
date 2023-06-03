@@ -30,6 +30,7 @@
         {
             this.btn_ParseFile = new System.Windows.Forms.Button();
             this.btn_InitModel = new System.Windows.Forms.Button();
+            this.btn_folder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_ParseFile
@@ -52,11 +53,22 @@
             this.btn_InitModel.UseVisualStyleBackColor = true;
             this.btn_InitModel.Click += new System.EventHandler(this.btn_InitModel_Click);
             // 
+            // btn_folder
+            // 
+            this.btn_folder.Location = new System.Drawing.Point(12, 92);
+            this.btn_folder.Name = "btn_folder";
+            this.btn_folder.Size = new System.Drawing.Size(112, 34);
+            this.btn_folder.TabIndex = 2;
+            this.btn_folder.Text = "folder";
+            this.btn_folder.UseVisualStyleBackColor = true;
+            this.btn_folder.Click += new System.EventHandler(this.btn_folder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_folder);
             this.Controls.Add(this.btn_InitModel);
             this.Controls.Add(this.btn_ParseFile);
             this.Name = "Form1";
@@ -69,5 +81,6 @@
 
         private Button btn_ParseFile;
         private Button btn_InitModel;
+        private Button btn_folder;
     }
 }
