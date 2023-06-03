@@ -9,8 +9,14 @@ public class File : DomainEntity
         Hash = hash;
         Namespace = fileNamespace;
     }
+
     public string Path { get; }
-    public string Hash { get; }
+    public string Hash { get; private set; }
     public string Namespace { get; }
     public IList<Object> Items { get; } = new List<Object>();
+
+    public void UpdateHash(string newHash)
+    {
+        Hash = newHash;
+    }
 }

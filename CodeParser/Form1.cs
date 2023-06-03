@@ -22,12 +22,11 @@ namespace CodeParser
             //var path = "C:\\Work\\StyleRow\\stylerow\\StyleRow.Core\\Audit\\BusinessObjects\\ActionType.cs";
             var path = "c:\\Work\\StyleRow\\stylerow\\StyleRow.Logic\\Project\\ProjectItemService.cs";
             var result = await _fileParserService.ParseAsync(path);
-            ;
         }
 
         private async void btn_InitModel_Click(object sender, EventArgs e)
         {
-            var path = "C:\\Work\\StyleRow\\stylerow\\StyleRow.DataContracts\\Project\\ProjectSettingsTaxDto.cs";
+            var path = "C:\\Work\\StyleRow\\stylerow\\StyleRow.DataContracts\\Product\\Configurator\\FabricProductDto.cs";
             var result = await _fileParserService.ParseAsync(path);
             var item = result.FirstOrDefault() as Class;
 

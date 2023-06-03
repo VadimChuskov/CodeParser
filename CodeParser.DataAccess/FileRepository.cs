@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using CodeParser.DataAccess.Interfaces;
+﻿using CodeParser.DataAccess.Interfaces;
 using CodeParser.Database;
 using CodeParser.Database.Models;
 using Microsoft.EntityFrameworkCore;
@@ -22,63 +21,73 @@ public class FileRepository : IFileRepository
         var test = db.File.Any();
     }
 
-    public async Task<IReadOnlyCollection<File>> FindAsync(string fileName)
+    public async Task<IReadOnlyCollection<Domain.File>> FindAsync(string fileName)
     {
         var entities = await _dataContext.File
             .AsNoTracking()
+            .Include(file => file.Namespace)
             .Where(f =>  f.Name.Equals(fileName))
             .ToListAsync();
 
-        return entities.AsReadOnly();
-    }
-
-    public IReadOnlyCollection<File> Find(string fileName)
-    {
-        var entities = _dataContext.File
-            .AsNoTracking()
-            .Where(f =>  f.Name.Equals(fileName))
-            .ToList();
-
-        return entities.AsReadOnly();
+        return entities.Select(MapToDomain).ToList().AsReadOnly();
     }
 
     public async Task AddAsync(Domain.File file)
     {
-        using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        await using var transaction = await _dataContext.Database.BeginTransactionAsync();
+        
+        var namespaceEntity = await UpdateNamespace(file.Namespace);
 
         var entity = await _dataContext.File.AddAsync(new File
         {
             Name = file.Name,
             Path = file.Path,
             Hash = file.Hash,
+            Namespace = namespaceEntity,
             Created = DateTime.Now
         });
         
-        scope.Complete();
-    }
-    
-    public void Add(Domain.File file)
-    {
-        using var transaction = _dataContext.Database.BeginTransaction();
-
-        var sqlCommand = $"INSERT OR IGNORE INTO [Namespace] ([Name]) VALUES ('{file.Namespace}')";
-
-        _dataContext.Database
-            .ExecuteSqlRaw(sqlCommand);
-
-        var namespaseEntity = _dataContext.Namespace.Single(n => n.Name.Equals(file.Namespace));
+        await _dataContext.SaveChangesAsync();
         
-        _dataContext.File.Add(new File
+        await transaction.CommitAsync();
+    }
+
+    public async Task UpdateAsync(Domain.File file)
+    {
+        await using var transaction = await _dataContext.Database.BeginTransactionAsync();
+
+        var namespaceEntity = await UpdateNamespace(file.Namespace);
+
+        //var entity = await _dataContext.File.FindAsync()
+        
+        _dataContext.File.Update(new File
         {
+            Id = file.Id.GetValueOrDefault(),
             Name = file.Name,
             Path = file.Path,
             Hash = file.Hash,
-            Namespace = namespaseEntity,
-            Created = DateTime.Now
+            Namespace = namespaceEntity,
+            //Created = file.Created,
+            LastUpdate = DateTime.Now
         });
         
-        _dataContext.SaveChanges();
+        await _dataContext.SaveChangesAsync();
         
-        transaction.Commit();
+        await transaction.CommitAsync();
+    }
+
+    private async Task<Namespace> UpdateNamespace(string fileNamespace)
+    {
+        var sqlCommand = $"INSERT OR IGNORE INTO [Namespace] ([Name]) VALUES ('{fileNamespace}')";
+
+        await _dataContext.Database
+            .ExecuteSqlRawAsync(sqlCommand);
+
+        return await _dataContext.Namespace.SingleAsync(n => n.Name.Equals(fileNamespace));
+    }
+
+    private Domain.File MapToDomain(File file)
+    {
+        return new Domain.File(file.Name, file.Path, file.Hash, file.Namespace.Name);
     }
 }
