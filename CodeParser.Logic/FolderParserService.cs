@@ -22,7 +22,8 @@ public class FolderParserService : IFolderParserService
             .Where(fp => 
                 !fp.Contains("\\obj\\") 
                 && !fp.Contains("\\bin\\")
-                && !fp.Contains("Tests"))
+                && !fp.Contains("Tests")
+                && !fp.EndsWith(".cshtml.cs"))
             .ToList();
 
         //var availableProcessorCount = Environment.ProcessorCount - 3;
